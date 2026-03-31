@@ -1495,4 +1495,15 @@
     event.target.classList.add('active');
     document.querySelectorAll('#' + tabId + ' .venture-card').forEach((el, i) => {
       el.classList.remove('visible');
-      setTimeout(() => el.clas
+      setTimeout(() => el.classList.add('visible'), i * 100 + 50);
+    });
+  }
+
+  // Close all modals on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeVentureModal(); closeEduModal(); }
+  });
+</script>
+
+</body>
+</html>
