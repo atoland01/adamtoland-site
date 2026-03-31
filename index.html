@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adam Toland — GTM Operator & Founder</title>
+<title>Adam Toland — Builder. Curious. Rooted. Intentional.</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFhMWYzYyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iNzAwIiAKICAgICAgICBmaWxsPSIjNGE2ZmE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMC41Ij5BVDwvdGV4dD4KPC9zdmc+">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,6 +13,7 @@
 
   :root {
     --navy: #1a1f3c;
+    --navy-dark: #0f1224;
     --navy-light: #252b4a;
     --cream: #f5f0e8;
     --cream-dark: #ede7db;
@@ -36,7 +37,6 @@
     overflow-x: hidden;
   }
 
-  /* Subtle linen texture on cream sections */
   .cream-texture {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
   }
@@ -58,34 +58,41 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 70px;
-    background: var(--navy);
+    background: var(--navy-dark);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 48px;
     z-index: 999;
     transition: background 0.3s ease, box-shadow 0.3s ease;
   }
   nav.scrolled {
-    background: rgba(26,31,60,0.92);
+    background: rgba(15,18,36,0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
   }
 
   .nav-logo {
     font-family: var(--serif);
     line-height: 1;
     text-decoration: none;
+    z-index: 1;
   }
-  .nav-logo .surname { display: block; color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 0.12em; }
-  .nav-logo .firstname { display: block; color: var(--accent-dark); font-size: 10px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; margin-top: 1px; }
+  .nav-logo .surname { display: block; color: #fff; font-size: 17px; font-weight: 700; letter-spacing: 0.14em; }
+  .nav-logo .firstname { display: block; color: var(--accent-dark); font-size: 9px; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; margin-top: 2px; opacity: 0.8; }
 
-  .nav-links { display: flex; gap: 32px; }
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 36px;
+  }
   .nav-links a {
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.45);
     text-decoration: none;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -93,193 +100,258 @@
   }
   .nav-links a:hover { color: #fff; }
 
-  .nav-linkedin a {
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
+  /* BURGER MENU */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1001;
+  }
+  .burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: rgba(15,18,36,0.97);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    padding: 20px 0 28px;
+    z-index: 998;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .mobile-nav.open {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mobile-nav a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: color 0.2s;
+    padding: 14px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color 0.2s, background 0.2s;
   }
-  .nav-linkedin a:hover { color: #fff; }
+  .mobile-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none !important; }
+    .burger { display: flex; }
+  }
 
   /* HERO */
   #hero {
     min-height: 100vh;
-    background: var(--cream);
+    background: var(--navy-dark);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 100px 80px 60px;
-    gap: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
   }
 
-  .hero-left { flex: 1 1 480px; max-width: 560px; }
-  .hero-right { flex: 0 0 300px; display: flex; justify-content: center; align-items: flex-start; padding-top: 20px; }
-
-  .open-to-work {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 99px;
-    margin-bottom: 28px;
-  }
-  .open-to-work::before {
+  /* Grain texture */
+  #hero::before {
     content: '';
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #7dd3c0;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); }
-  }
-
-  .hero-name-block { margin-bottom: 24px; }
-  .hero-surname {
-    font-family: var(--serif);
-    font-size: clamp(72px, 10vw, 120px);
-    font-weight: 900;
-    color: var(--navy);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-  }
-  .hero-firstname {
-    font-family: var(--serif);
-    font-size: clamp(24px, 3.5vw, 42px);
-    font-weight: 400;
-    color: var(--navy);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-
-  .hero-bio {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 20px;
-    line-height: 1.8;
-    color: var(--text-muted);
-    max-width: 560px;
-    margin-top: 24px;
-  }
-
-  /* Floating headshot animation */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-14px); }
-  }
-  .headshot-wrap {
-    animation: float 5s ease-in-out infinite;
-  }
-
-  /* Ambient blob */
-  .hero-blob {
     position: absolute;
-    width: 340px;
-    height: 340px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(74,111,165,0.13) 0%, transparent 70%);
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    animation: blob-drift 8s ease-in-out infinite;
     z-index: 0;
   }
-  @keyframes blob-drift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -20px) scale(1.05); }
-    66% { transform: translate(-20px, 15px) scale(0.97); }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,111,165,0.11) 0%, transparent 65%);
+    top: -180px;
+    left: -180px;
+    pointer-events: none;
+    z-index: 0;
+    animation: glow-drift 14s ease-in-out infinite;
+  }
+  @keyframes glow-drift {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(40px,30px); }
   }
 
-  /* HEADSHOT */
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-left { flex: 1 1 0; max-width: 620px; }
+  .hero-right { flex: 0 0 300px; display: flex; justify-content: flex-end; align-items: center; }
+
+  .hero-rule {
+    width: 48px;
+    height: 1px;
+    background: var(--accent-dark);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: rule-in 0.7s ease 0.25s forwards;
+  }
+  @keyframes rule-in { to { opacity: 0.45; transform: scaleX(1); } }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(72px, 10vw, 130px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(32px);
+    animation: fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+  }
+  .hero-name .firstname {
+    display: block;
+    font-size: clamp(18px, 2.6vw, 34px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent-dark);
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    line-height: 1;
+    opacity: 0.8;
+  }
+
+  .hero-line {
+    margin-top: 36px;
+    font-family: var(--serif);
+    font-size: clamp(16px, 1.9vw, 22px);
+    font-style: italic;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.7;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.65s forwards;
+  }
+  .hero-line em {
+    color: rgba(255,255,255,0.92);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .hero-tagline {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    opacity: 0;
+    animation: fade-up 0.6s ease 1s forwards;
+  }
+  .tagline-word {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: lowercase;
+    color: rgba(255,255,255,0.28);
+    transition: color 0.25s;
+    cursor: default;
+    user-select: none;
+  }
+  .tagline-word:hover { color: rgba(255,255,255,0.7); }
+  .tagline-sep {
+    width: 22px;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 10px;
+    flex-shrink: 0;
+  }
+
+  /* HEADSHOT — duotone */
   .headshot-wrap {
     position: relative;
-    width: 340px;
-    max-width: 100%;
+    width: 280px;
+    height: 380px;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fade-right 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
   }
-  .headshot-card {
+  @keyframes fade-right { to { opacity: 1; transform: translateX(0); } }
+
+  .headshot-img-wrap {
     width: 100%;
+    height: 100%;
     border-radius: 20px;
     overflow: hidden;
-    background: #d0d8e4;
-    aspect-ratio: 3/4;
     position: relative;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
   }
-  .headshot-card img {
+  .headshot-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top center;
     display: block;
+    filter: grayscale(100%) contrast(1.1) brightness(0.75);
+    mix-blend-mode: luminosity;
   }
-  .accent-bracket {
+  .headshot-img-wrap::before {
+    content: '';
     position: absolute;
-    bottom: -14px;
-    right: -14px;
-    width: 50px;
-    height: 50px;
-    border-right: 3px solid var(--accent);
-    border-bottom: 3px solid var(--accent);
-    border-radius: 0 0 8px 0;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(15,18,36,0.55) 0%, rgba(74,111,165,0.3) 50%, rgba(15,18,36,0.75) 100%);
+    z-index: 1;
+    border-radius: 20px;
   }
-  .accent-bracket-top {
+  .headshot-img-wrap::after {
+    content: '';
     position: absolute;
-    top: -14px;
-    left: -14px;
-    width: 50px;
-    height: 50px;
-    border-left: 3px solid var(--accent-dark);
-    border-top: 3px solid var(--accent-dark);
-    border-radius: 8px 0 0 0;
-    opacity: 0.5;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(15,18,36,0.6) 80%, rgba(15,18,36,0.95) 100%);
+    z-index: 2;
+    border-radius: 20px;
+  }
+  .headshot-accent-line {
+    position: absolute;
+    left: -12px;
+    top: 40px;
+    bottom: 40px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--accent-dark), transparent);
+    opacity: 0.3;
   }
 
-  /* TICKER */
-  .ticker {
-    background: var(--navy);
-    padding: 14px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    max-width: 100vw;
-  }
-  .ticker-inner {
-    display: inline-flex;
-    animation: ticker-scroll 30s linear infinite;
-  }
-  .ticker-item {
-    color: rgba(255,255,255,0.85);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 0 28px;
-  }
-  .ticker-dot {
-    color: var(--accent-dark);
-    padding: 0;
-  }
-  @keyframes ticker-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+  @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
 
   /* SECTION SHARED */
-  .section {
-    padding: 100px 40px;
-  }
+  .section { padding: 100px 40px; }
   .section-inner {
     max-width: 1100px;
     margin: 0 auto;
@@ -313,18 +385,16 @@
 
   .exp-entry {
     position: relative;
-    margin-bottom: 64px;
+    margin-bottom: 72px;
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .exp-entry.visible { opacity: 1; transform: translateY(0); }
-
   .exp-entry::before {
     content: '';
     position: absolute;
-    left: -31px;
-    top: 10px;
+    left: -31px; top: 10px;
     width: 14px; height: 14px;
     border-radius: 50%;
     background: var(--accent);
@@ -335,10 +405,6 @@
   .exp-entry:hover::before {
     transform: scale(1.55);
     box-shadow: 0 0 0 3px var(--accent), 0 0 12px rgba(74,111,165,0.35);
-  }
-  .exp-entry:hover .exp-company {
-    color: #2a4f85;
-    text-shadow: 0 1px 12px rgba(74,111,165,0.15);
   }
 
   .exp-header {
@@ -354,7 +420,6 @@
     font-size: 24px;
     font-weight: 700;
     color: var(--accent);
-    transition: color 0.25s ease;
   }
   .exp-dates {
     background: var(--navy);
@@ -376,36 +441,76 @@
     letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--text-muted);
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
   }
-  .exp-meta span { display: flex; align-items: center; gap: 5px; }
-  .exp-desc {
+  .exp-narrative {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 1.75;
     color: var(--text-muted);
-    margin-bottom: 14px;
+    max-width: 600px;
+    margin-bottom: 24px;
   }
-  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .exp-bullets li {
-    font-size: 14px;
-    line-height: 1.7;
+  .exp-narrative em {
+    font-style: normal;
+    font-weight: 700;
     color: var(--text-dark);
-    padding-left: 18px;
-    position: relative;
   }
-  .exp-bullets li::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0.7;
+
+  /* Proof point grid */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 520px;
+  }
+  .proof-point {
+    background: var(--white);
+    border: 1px solid #e0e4ee;
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .proof-point:hover {
+    box-shadow: 0 6px 20px rgba(74,111,165,0.12);
+    transform: translateY(-2px);
+  }
+  .proof-number {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .proof-label {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  /* Proof points — two column for IDEA Center */
+  .proof-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 360px;
   }
 
   /* EDUCATION */
   #education { background: var(--white); }
+
+  .edu-intro {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin-bottom: 32px;
+  }
 
   .edu-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .edu-card {
@@ -416,11 +521,11 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    cursor: pointer;
   }
   .edu-card.visible { opacity: 1; transform: translateY(0); }
   .edu-card:hover { box-shadow: 0 8px 32px rgba(74,111,165,0.12); transform: translateY(-4px); transition: box-shadow 0.3s, transform 0.3s; }
-  .edu-card[onclick] { position: relative; }
-  .edu-card[onclick]::after {
+  .edu-card::after {
     content: 'Read more →';
     display: block;
     margin-top: 12px;
@@ -432,55 +537,20 @@
     opacity: 0;
     transition: opacity 0.2s;
   }
-  .edu-card[onclick]:hover::after { opacity: 1; }
+  .edu-card:hover::after { opacity: 1; }
 
-  .edu-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    background: var(--accent-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    margin-bottom: 18px;
-  }
-  .edu-school {
-    font-family: var(--serif);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-  .edu-degree {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  .edu-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #eee;
-  }
+  .edu-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 18px; }
+  .edu-school { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .edu-degree { font-size: 14px; font-weight: 500; color: var(--text-dark); margin-bottom: 12px; line-height: 1.5; }
+  .edu-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
   .edu-dates { font-size: 13px; color: var(--text-muted); }
-  .edu-highlight {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    background: var(--accent-light);
-    padding: 3px 10px;
-    border-radius: 99px;
-  }
+  .edu-highlight { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--accent); background: var(--accent-light); padding: 3px 10px; border-radius: 99px; }
   .edu-notes { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
 
   /* VENTURES */
   #ventures { background: var(--cream); }
 
-  .ventures-layout { display: grid; grid-template-columns: 180px 1fr; gap: 40px; }
-  .ventures-tabs { display: flex; flex-direction: column; gap: 8px; }
+  .ventures-tabs { display: flex; flex-direction: row; margin-bottom: 28px; gap: 10px; }
   .tab-btn {
     background: none;
     border: none;
@@ -496,10 +566,7 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .tab-btn.active {
-    background: var(--accent);
-    color: #fff;
-  }
+  .tab-btn.active { background: var(--accent); color: #fff; }
   .tab-btn:hover:not(.active) { background: var(--accent-light); color: var(--accent); }
 
   .tab-content { display: none; }
@@ -511,7 +578,7 @@
     border-radius: 14px;
     padding: 24px;
     position: relative;
-    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
     opacity: 0;
     transform: translateY(16px);
     transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s;
@@ -519,384 +586,57 @@
   .venture-card.visible { opacity: 1; transform: translateY(0); }
   .venture-card:hover { box-shadow: 0 6px 24px rgba(74,111,165,0.14); transform: translateY(-3px); }
 
-  .card-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    background: var(--accent-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    margin-bottom: 14px;
-  }
-  .card-type-tag {
-    position: absolute;
-    top: 20px; right: 20px;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    background: var(--cream);
-    padding: 3px 8px;
-    border-radius: 99px;
-  }
-  .card-title {
-    font-family: var(--serif);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 8px;
-  }
+  .card-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 14px; }
+  .card-type-tag { position: absolute; top: 20px; right: 20px; font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-light); background: var(--cream); padding: 3px 8px; border-radius: 99px; }
+  .card-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
   .card-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+  .card-cta { margin-top: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 
   /* AWARDS */
   #awards { background: var(--white); }
 
-  .awards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
+  .awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .award-card {
     background: var(--white);
     border: 1px solid #e0e4ee;
     border-radius: 14px;
     padding: 24px;
-    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s;
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
   }
   .award-card.visible { opacity: 1; transform: translateY(0); }
-  .award-card:hover { box-shadow: 0 6px 24px rgba(74,111,165,0.12); transform: translateY(-4px); }
-  .award-card.featured {
-    border: 1px solid #e0e4ee;
-    background: var(--white);
-  }
-  .award-card:hover, .award-card:focus {
+  .award-card:hover {
     border-color: var(--accent);
     background: var(--accent-light);
     box-shadow: 0 8px 28px rgba(74,111,165,0.18);
     transform: translateY(-5px);
-    cursor: pointer;
   }
   .award-icon { font-size: 20px; margin-bottom: 12px; color: var(--accent); }
-  .award-title {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 6px;
-    line-height: 1.4;
-  }
+  .award-title { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
   .award-body { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
-  .award-date {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-light);
-  }
+  .award-date { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-light); }
 
   /* SKILLS */
-  #skills { background: var(--navy); }
-  #skills .section-inner { grid-template-columns: 220px 1fr; }
-  @media (max-width: 900px) {
-    #skills .section-inner { grid-template-columns: 1fr; }
-    .skills-groups { margin-top: 8px; }
-    .skill-group-label { margin-top: 4px; }
-  }
+  #skills { background: var(--navy-dark); }
 
   .skills-groups { display: flex; flex-direction: column; gap: 36px; }
-  .skill-group-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-dark);
-    margin-bottom: 12px;
-  }
+  .skill-group-label { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 12px; }
   .skills-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-  .skill-pill {
-    background: var(--navy-light);
-    color: rgba(255,255,255,0.85);
-    font-size: 13px;
-    font-weight: 400;
-    padding: 7px 16px;
-    border-radius: 99px;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: border-color 0.2s, background 0.2s;
-  }
+  .skill-pill { background: var(--navy-light); color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 400; padding: 7px 16px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.1); transition: border-color 0.2s, background 0.2s; }
   .skill-pill:hover { border-color: var(--accent-dark); background: rgba(74,111,165,0.25); }
 
-  /* FOOTER CTA */
-  #contact { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); }
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 100px 40px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 60px;
-    align-items: end;
-  }
-  .footer-headline {
-    font-family: var(--serif);
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.15;
-  }
-  .footer-headline em {
-    font-style: italic;
-    color: var(--accent-dark);
-  }
-  .footer-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.55);
-    margin-top: 16px;
-    max-width: 440px;
-    line-height: 1.7;
-  }
-  .footer-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
-  .footer-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    padding: 12px 20px;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 99px;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .footer-link:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
-  .footer-link svg { width: 16px; height: 16px; }
+  .cred-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 16px; transition: background 0.2s, border-color 0.2s; }
+  .cred-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(122,163,212,0.4); }
+  .cred-issuer { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+  .cred-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .cred-title { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.9); line-height: 1.4; margin-bottom: 3px; }
+  .cred-sub { font-size: 12px; color: rgba(255,255,255,0.4); }
 
-  .footer-copy {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 40px;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    font-size: 12px;
-    color: rgba(255,255,255,0.3);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .section-inner { grid-template-columns: 1fr; }
-    .section-label { position: static; font-size: 26px; margin-bottom: 8px; }
-    nav { padding: 0 20px; }
-    .nav-links { gap: 16px; display: none; }
-    #hero { flex-direction: column-reverse; padding: 100px 24px 60px; }
-    .headshot-wrap { width: 240px; }
-    .hero-surname { font-size: 72px; }
-    .edu-cards { grid-template-columns: 1fr; }
-    .awards-grid { grid-template-columns: 1fr 1fr; }
-    .tab-content.active { grid-template-columns: 1fr; }
-    .footer-inner { grid-template-columns: 1fr; }
-    .footer-links { align-items: flex-start; }
-    .section { padding: 70px 24px; }
-  }
-
-  /* AWARD MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,31,60,0.7);
-    backdrop-filter: blur(4px);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-box {
-    background: #fff;
-    border-radius: 20px;
-    max-width: 600px;
-    width: 100%;
-    padding: 40px;
-    position: relative;
-    animation: modal-in 0.3s ease;
-    max-height: 85vh;
-    overflow-y: auto;
-  }
-  .modal-photo {
-    width: 100%;
-    max-height: 240px;
-    object-fit: cover;
-    object-position: center 20%;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    display: block;
-  }
-  .modal-photo.zoom-out {
-    object-fit: contain;
-    background: #f0f0f0;
-    max-height: 280px;
-  }
-  .modal-photo-placeholder {
-    width: 100%;
-    height: 180px;
-    background: var(--accent-light);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: var(--accent);
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    border: 2px dashed var(--accent);
-  }
-  @keyframes modal-in {
-    from { opacity: 0; transform: translateY(20px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .modal-close {
-    position: sticky;
-    top: 0;
-    float: right;
-    margin: -8px -8px 8px 8px;
-    background: white;
-    border: none;
-    font-size: 22px; cursor: pointer;
-    color: var(--text-muted);
-    line-height: 1;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background 0.2s;
-    z-index: 10;
-  }
-  .modal-close:hover { background: var(--accent-light); }
-  .modal-icon { font-size: 28px; margin-bottom: 12px; }
-  .modal-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.3; }
-  .modal-meta { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
-  .modal-body { font-size: 15px; line-height: 1.75; color: var(--text-muted); }
-  .modal-body p { margin-bottom: 12px; }
-  .modal-body strong { color: var(--navy); font-weight: 600; }
-
-
-  .cred-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 14px 16px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .cred-card:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(122,163,212,0.4);
-  }
-  .cred-issuer {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 6px;
-  }
-  .cred-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .cred-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.9);
-    line-height: 1.4;
-    margin-bottom: 3px;
-  }
-  .cred-sub {
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-  }
-
-
-  /* BURGER MENU */
-  .burger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    z-index: 1001;
-  }
-  .burger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .burger.open span:nth-child(2) { opacity: 0; }
-  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .mobile-nav {
-    display: none;
-    position: fixed;
-    top: 70px; left: 0; right: 0;
-    background: rgba(26,31,60,0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    flex-direction: column;
-    padding: 20px 0 28px;
-    z-index: 998;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    transform: translateY(-10px);
-    opacity: 0;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-  }
-  .mobile-nav.open {
-    display: flex;
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .mobile-nav a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 14px 32px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: color 0.2s, background 0.2s;
-  }
-  .mobile-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
-
-  @media (max-width: 900px) {
-    .nav-links { display: none !important; }
-    .burger { display: flex; }
-  }
-
-
-  /* INTERESTS SECTION */
+  /* INTERESTS */
   #interests { background: var(--cream); }
-  .interests-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
-  }
+  .interests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 8px; }
   .interest-card {
     background: var(--white);
     border: 1px solid #e0e4ee;
@@ -905,36 +645,64 @@
     display: flex;
     gap: 16px;
     align-items: flex-start;
-    transition: box-shadow 0.2s, transform 0.2s;
     opacity: 0;
     transform: translateY(16px);
     transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s;
   }
   .interest-card.visible { opacity: 1; transform: translateY(0); }
-  .interest-card:hover {
-    box-shadow: 0 6px 24px rgba(74,111,165,0.12);
-    transform: translateY(-3px);
-  }
-  .interest-emoji {
-    font-size: 26px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .interest-body {}
-  .interest-title {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 4px;
-  }
-  .interest-desc {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--text-muted);
-  }
+  .interest-card:hover { box-shadow: 0 6px 24px rgba(74,111,165,0.12); transform: translateY(-3px); }
+  .interest-emoji { font-size: 26px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .interest-title { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .interest-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
 
+  /* FOOTER */
+  #contact { background: var(--navy-dark); border-top: 1px solid rgba(255,255,255,0.07); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; padding: 100px 40px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: end; }
+  .footer-headline { font-family: var(--serif); font-size: clamp(40px, 5vw, 64px); font-weight: 700; color: #fff; line-height: 1.15; }
+  .footer-headline em { font-style: italic; color: var(--accent-dark); }
+  .footer-sub { font-size: 15px; color: rgba(255,255,255,0.55); margin-top: 16px; max-width: 440px; line-height: 1.7; }
+  .footer-links { display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
+  .footer-link { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.05em; padding: 12px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; transition: all 0.2s; white-space: nowrap; }
+  .footer-link:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+  .footer-link svg { width: 16px; height: 16px; }
+  .footer-copy { max-width: 1100px; margin: 0 auto; padding: 20px 40px; border-top: 1px solid rgba(255,255,255,0.07); font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* MODALS */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,18,36,0.75); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; padding: 24px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: #fff; border-radius: 20px; max-width: 600px; width: 100%; padding: 40px; position: relative; animation: modal-in 0.3s ease; max-height: 85vh; overflow-y: auto; }
+  .modal-photo { width: 100%; max-height: 260px; object-fit: cover; object-position: center 20%; border-radius: 12px; margin-bottom: 20px; display: block; }
+  @keyframes modal-in { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .modal-close { position: sticky; top: 0; float: right; margin: -8px -8px 8px 8px; background: white; border: none; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; padding: 4px 8px; border-radius: 6px; transition: background 0.2s; z-index: 10; }
+  .modal-close:hover { background: var(--accent-light); }
+  .modal-icon { font-size: 28px; margin-bottom: 12px; }
+  .modal-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.3; }
+  .modal-meta { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+  .modal-body { font-size: 15px; line-height: 1.75; color: var(--text-muted); }
+  .modal-body p { margin-bottom: 12px; }
+  .modal-body strong { color: var(--navy); font-weight: 600; }
+  .modal-body h3 { font-family: var(--serif); font-size: 17px; color: var(--navy); margin: 18px 0 8px; }
+  .modal-article-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 99px; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; transition: background 0.2s; }
+  .modal-article-link:hover { background: #3a5f95; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .section-inner { grid-template-columns: 1fr; }
+    .section-label { position: static; font-size: 26px; margin-bottom: 8px; }
+    nav { padding: 0 20px; }
+    #hero { flex-direction: column-reverse; padding: 100px 24px 60px; }
+    .hero-inner { flex-direction: column-reverse; gap: 40px; align-items: flex-start; }
+    .hero-right { flex: 0 0 auto; width: 100%; justify-content: center; }
+    .headshot-wrap { width: 220px; height: 300px; }
+    .edu-cards { grid-template-columns: 1fr; }
+    .awards-grid { grid-template-columns: 1fr 1fr; }
+    .tab-content.active { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-links { align-items: flex-start; }
+    .section { padding: 70px 24px; }
+    .proof-grid { grid-template-columns: 1fr 1fr; }
+    #skills .section-inner { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -942,7 +710,7 @@
 <div id="progress-bar"></div>
 
 <!-- NAV -->
-<nav>
+<nav id="nav">
   <a href="#hero" class="nav-logo">
     <span class="surname">TOLAND</span>
     <span class="firstname">Adam</span>
@@ -954,12 +722,6 @@
     <a href="#awards">Awards</a>
     <a href="#skills">Skills</a>
     <a href="#interests">Beyond the CV</a>
-  </div>
-  <div class="nav-linkedin">
-    <a href="https://linkedin.com/in/adamtoland" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      LinkedIn
-    </a>
   </div>
   <button class="burger" id="burger-btn" onclick="toggleBurger()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -977,48 +739,42 @@
 </div>
 
 <!-- HERO -->
-<section id="hero" class="cream-texture" style="padding:0; background:var(--cream);">
-<div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:100px 60px 60px; gap:56px; width:100%; flex-wrap:wrap;">
-  <div class="hero-left" style="flex:1 1 420px; max-width:540px;">
-    <div class="open-to-work">Open to Work</div>
-    <div class="hero-name-block">
-      <div class="hero-surname">TOLAND</div>
-      <div class="hero-firstname">Adam</div>
-    </div>
-    <p class="hero-bio">
-      Irish entrepreneur from Derry, Northern Ireland. Won a full scholarship to the University of Notre Dame — then stayed to co-found a startup, close a $6M deal, raise $450K, and win $120K in competition prize money. Now back home and looking to bring that commercial and analytical edge to high-growth AI and tech.
-    </p>
-  </div>
-  <div class="hero-right" style="position:relative; flex:0 0 300px;">
-    <div class="hero-blob" style="top:-60px; right:-40px;"></div>
-    <div class="headshot-wrap">
-      <div class="headshot-card">
-        <img src="https://raw.githubusercontent.com/atoland01/adamtoland-site/main/website%20headshot.jpeg" alt="Adam Toland">
-      </div>
-      <div class="accent-bracket"></div>
-      <div class="accent-bracket-top"></div>
-    </div>
-  </div>
-</div>
-</section>
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">GTM Operator</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Startup Founder</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">AI Enthusiast</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Fulbright Scholar</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Notre Dame ESTEEM</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Derry, N. Ireland</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">GTM Operator</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Startup Founder</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">AI Enthusiast</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Fulbright Scholar</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Notre Dame ESTEEM</span><span class="ticker-dot">·</span>
-    <span class="ticker-item">Derry, N. Ireland</span><span class="ticker-dot">·</span>
+    <div class="hero-left">
+      <div class="hero-rule"></div>
+      <div class="hero-name">
+        <span class="firstname">Adam</span>
+        TOLAND
+      </div>
+      <div class="hero-line">
+        I come from a place that teaches you to keep going.<br>
+        <em>I'm just getting started.</em>
+      </div>
+      <div class="hero-tagline">
+        <span class="tagline-word">builder</span>
+        <div class="tagline-sep"></div>
+        <span class="tagline-word">curious</span>
+        <div class="tagline-sep"></div>
+        <span class="tagline-word">rooted</span>
+        <div class="tagline-sep"></div>
+        <span class="tagline-word">intentional</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="headshot-wrap">
+        <div class="headshot-accent-line"></div>
+        <div class="headshot-img-wrap">
+          <img src="https://raw.githubusercontent.com/atoland01/adamtoland-site/main/website%20headshot.jpeg" alt="Adam Toland">
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
+</section>
 
 <!-- EXPERIENCE -->
 <section id="experience" class="section cream-texture">
@@ -1032,16 +788,30 @@
           <div class="exp-dates">May 2024 – Mar 2026</div>
         </div>
         <div class="exp-meta">
-          <span>💼 Co-Founder & Chief Operations Officer</span>
-          <span>📍 South Bend, Indiana</span>
+          <span>Co-Founder & Chief Operations Officer</span>
+          <span>South Bend, Indiana</span>
         </div>
-        <div class="exp-desc">Security hardware startup developing a patented device that secures interior doors in under five seconds during active-threat emergencies.</div>
-        <ul class="exp-bullets">
-          <li>Built and led all commercial sales and operations from pre-revenue to $85K revenue and $730K pipeline within four months.</li>
-          <li>Owned full sales cycle end-to-end — prospecting, SDR outreach (cold call/email/LinkedIn), discovery calls, demos, in-person pitches, deal close, and post-sale account management.</li>
-          <li>Secured a $450K investment round and formed an experienced advisory board. Finished 2nd in the McCloskey New Venture Competition (3rd largest startup pitch competition in the US), winning $25K.</li>
-          <li>Developed brand identity, positioning, and messaging from scratch; conducted 120+ primary stakeholder interviews to expand target market from schools into healthcare, financial services, and government.</li>
-        </ul>
+        <div class="exp-narrative">
+          Growing up in post-conflict Derry, you learn what it feels like when violence is close. When I encountered the problem of active-threat emergencies in American schools — and realised that most interior doors simply can't be quickly secured from the inside — it felt less like a business opportunity and more like a calling. I entered the industry cold, spoke with over 120 security experts, school administrators, and first responders to understand the problem from every angle, and built the entire commercial operation from scratch. <em>The results followed.</em>
+        </div>
+        <div class="proof-grid">
+          <div class="proof-point">
+            <div class="proof-number">$85K</div>
+            <div class="proof-label">revenue in four months from zero</div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-number">$730K</div>
+            <div class="proof-label">pipeline built alongside it</div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-number">$450K</div>
+            <div class="proof-label">raised from investors</div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-number">2nd place</div>
+            <div class="proof-label">McCloskey New Venture Competition — $25K won</div>
+          </div>
+        </div>
       </div>
 
       <div class="exp-entry">
@@ -1050,15 +820,22 @@
           <div class="exp-dates">May 2022 – May 2024</div>
         </div>
         <div class="exp-meta">
-          <span>💼 Lead Business Development Analyst</span>
-          <span>📍 South Bend, Indiana</span>
+          <span>Lead Business Development Analyst</span>
+          <span>South Bend, Indiana</span>
         </div>
-        <div class="exp-desc">Commercialisation and venture creation centre at the University of Notre Dame.</div>
-        <ul class="exp-bullets">
-          <li>Identified a market opportunity via a corporate press release, built a targeted outbound list of C-suite decision makers, and pitched directly to CXOs at major hospitality brands including Marriott.</li>
-          <li>Closed a $6M placement deal with Choice Hotels to hire 76 Afghan refugees into entry-level hospitality roles, directly addressing the industry's 86% staff turnover rate.</li>
-          <li>Supervised a business development and sales team executing outbound campaigns to support student entrepreneurs with GTM and growth strategy.</li>
-        </ul>
+        <div class="exp-narrative">
+          I was working with the Migrant Impact Network — supporting Afghan refugees who'd fled war and needed full-time employment to secure their legal right to stay in the US. When the Tent Partnership for Refugees published a summit announcing 45 major companies committing to hire refugees, I saw the opening. I built the outbound list, cold called and emailed C-suite contacts through the Notre Dame alumni network, got in front of CXOs at Marriott, Choice Hotels and others, and closed deals that changed lives.
+        </div>
+        <div class="proof-grid-2">
+          <div class="proof-point">
+            <div class="proof-number">$6M</div>
+            <div class="proof-label">placement deal closed</div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-number">76</div>
+            <div class="proof-label">people secured full-time employment</div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -1069,54 +846,57 @@
 <section id="education" class="section">
   <div class="section-inner">
     <div class="section-label">Education</div>
-    <div class="edu-cards">
+    <div>
+      <p class="edu-intro">My academic path looks unconventional on paper — a TEFL qualification in Barcelona, a double degree in mathematics and Spanish, then a Master's in technology entrepreneurship. But there's a single thread running through all of it: problem solving. Mathematics taught me to reason from first principles. Language showed me that the same rigour applies to human systems — grammar, culture, meaning. Entrepreneurship turned out to be both of those things at once, but with real stakes. Each degree was the next version of the same obsession.</p>
+      <div class="edu-cards">
 
-      <div class="edu-card" tabindex="0" onclick="openEduModal('esteem')" style="cursor:pointer;">
-        <div class="edu-icon">🎓</div>
-        <div class="edu-school">University of Notre Dame</div>
-        <div class="edu-degree">M.S. in Engineering, Science & Technology Entrepreneurship (ESTEEM)</div>
-        <div class="edu-meta">
-          <span class="edu-dates">Aug 2024 – May 2025</span>
-          <span class="edu-highlight">Full Scholarship</span>
+        <div class="edu-card" tabindex="0" onclick="openEduModal('esteem')">
+          <div class="edu-icon">🎓</div>
+          <div class="edu-school">University of Notre Dame</div>
+          <div class="edu-degree">M.S. in Engineering, Science & Technology Entrepreneurship (ESTEEM)</div>
+          <div class="edu-meta">
+            <span class="edu-dates">Aug 2024 – May 2025</span>
+            <span class="edu-highlight">Full Scholarship</span>
+          </div>
+          <div class="edu-notes">Graduate programme for STEM candidates focused on technology commercialisation. Coursework included generative AI, sales and growth hacking, and technical marketing.</div>
+          <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Generative AI</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Sales & Growth Hacking</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Technical Marketing</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Technology Commercialisation</span>
+          </div>
         </div>
-        <div class="edu-notes">Graduate programme for STEM candidates focused on technology commercialisation. Coursework included generative AI (technical foundations of AI systems), sales and growth hacking, and technical marketing.</div>
-        <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;">
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Generative AI</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Sales & Growth Hacking</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Technical Marketing</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Technology Commercialisation</span>
+
+        <div class="edu-card" tabindex="0" onclick="openEduModal('undergrad')">
+          <div class="edu-icon">🎓</div>
+          <div class="edu-school">University of Notre Dame</div>
+          <div class="edu-degree">B.S. Mathematics & Spanish (Honours) · Minor in Data Science</div>
+          <div class="edu-meta">
+            <span class="edu-dates">Aug 2020 – May 2024</span>
+            <span class="edu-highlight">Fulbright Scholar</span>
+          </div>
+          <div class="edu-notes">Double degree in Mathematics and Spanish with a minor in Data Science. Coursework spanned statistical modelling, data analysis, and modern societal issues in the Spanish-speaking world.</div>
+          <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Mathematics</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Spanish</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Data Science Minor</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Fulbright Scholar</span>
+            <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">iTREDS Scholar</span>
+          </div>
         </div>
+
+        <div class="edu-card" tabindex="0" onclick="openEduModal('tefl')" style="grid-column: 1 / -1; max-width: 420px;">
+          <div class="edu-icon">📚</div>
+          <div class="edu-school">Universitat Internacional de Catalunya</div>
+          <div class="edu-degree">Certificate in TEFL/ESL — Teaching English as a Foreign Language</div>
+          <div class="edu-meta">
+            <span class="edu-dates">Jan 2020 – Apr 2020</span>
+            <span class="edu-highlight">Barcelona</span>
+          </div>
+          <div class="edu-notes">Completed during a gap year in Barcelona while simultaneously teaching English at Escola Pia de Caldes. Formal qualification in teaching methodology, lesson planning, and language acquisition for non-native speakers.</div>
+        </div>
+
       </div>
-
-      <div class="edu-card" tabindex="0" onclick="openEduModal('undergrad')" style="cursor:pointer;">
-        <div class="edu-icon">🎓</div>
-        <div class="edu-school">University of Notre Dame</div>
-        <div class="edu-degree">B.S. Mathematics & Spanish (Honours) · Minor in Data Science</div>
-        <div class="edu-meta">
-          <span class="edu-dates">Aug 2020 – May 2024</span>
-          <span class="edu-highlight">Fulbright Scholar</span>
-        </div>
-        <div class="edu-notes">Double degree in Mathematics and Spanish with a minor in Data Science. Coursework spanned statistical modelling, data analysis, and Hispanic linguistics.</div>
-        <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;">
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Mathematics</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Spanish</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Data Science Minor</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">Fulbright Scholar</span>
-          <span style="font-size:11px; background:#f0f4fb; color:#4a6fa5; padding:3px 10px; border-radius:99px; font-weight:500;">iTREDS Scholar</span>
-        </div>
-      </div>
-
-      <div class="edu-card" tabindex="0" onclick="openEduModal('tefl')" style="cursor:pointer; grid-column: 1 / -1; max-width: 420px;">
-        <div class="edu-icon">📚</div>
-        <div class="edu-school">Universitat Internacional de Catalunya</div>
-        <div class="edu-degree">Certificate in TEFL/ESL — Teaching English as a Foreign Language</div>
-        <div class="edu-meta">
-          <span class="edu-dates">Jan 2020 – Apr 2020</span>
-          <span class="edu-highlight">Barcelona</span>
-        </div>
-        <div class="edu-notes">Completed during a gap year in Barcelona while simultaneously teaching English at Escola Pia de Caldes. Formal qualification in teaching methodology, lesson planning, and language acquisition for non-native speakers.</div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1126,49 +906,47 @@
   <div class="section-inner">
     <div class="section-label">Ventures &amp;<br>Projects</div>
     <div>
-      <div style="flex-direction:row; margin-bottom: 28px; gap: 10px; display:flex;">
+      <div class="ventures-tabs">
         <button class="tab-btn active" onclick="switchTab('ventures-tab', event)">Ventures</button>
         <button class="tab-btn" onclick="switchTab('projects-tab', event)">Projects</button>
       </div>
 
-      <!-- VENTURES TAB -->
       <div id="ventures-tab" class="tab-content active">
 
-        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('doorblockade')" style="cursor:pointer;">
+        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('doorblockade')">
           <div class="card-icon">🚀</div>
           <div class="card-type-tag">Venture</div>
           <div class="card-title">DoorBlockade</div>
-          <div class="card-desc">Patented door security device for active-threat emergencies. Co-founded from pre-revenue; raised $450K, generated $85K revenue and $730K pipeline.</div>
-          <div style="margin-top:14px; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent);">Read more →</div>
+          <div class="card-desc">Patented door security device for active-threat emergencies. Co-founded from pre-revenue; raised $450K, reached $85K revenue and $730K pipeline.</div>
+          <div class="card-cta">Read more →</div>
         </div>
 
-        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('ideacenter')" style="cursor:pointer;">
-          <div class="card-icon">🤝</div>
+        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('truepay')">
+          <div class="card-icon">💳</div>
           <div class="card-type-tag">Venture</div>
-          <div class="card-title">IDEA Center — $6M Deal</div>
-          <div class="card-desc">Identified a market gap, built a C-suite outbound list from scratch, and closed a $6M placement deal with Choice Hotels to employ 76 Afghan refugees.</div>
-          <div style="margin-top:14px; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent);">Read more →</div>
+          <div class="card-title">TruePay Partners</div>
+          <div class="card-desc">Independent payment consultancy helping small businesses negotiate better rates on card terminals and POS systems. 6 clients in the first month.</div>
+          <div class="card-cta">Read more →</div>
+        </div>
+
+        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('lantern')">
+          <div class="card-icon">🔦</div>
+          <div class="card-type-tag">Advisor</div>
+          <div class="card-title">Lantern Network</div>
+          <div class="card-desc">Advising a veteran-owned drone detection startup from day zero — strategy, positioning, GTM, and fundraising. Currently in the McCloskey New Venture Competition.</div>
+          <div class="card-cta">Read more →</div>
         </div>
 
       </div>
 
-      <!-- PROJECTS TAB -->
       <div id="projects-tab" class="tab-content">
 
-        <div class="venture-card" tabindex="0" onclick="openVentureModal('coming1')" style="cursor:pointer; opacity:0.7;">
+        <div class="venture-card visible" tabindex="0" onclick="openVentureModal('aigtm')">
           <div class="card-icon">⚡</div>
-          <div class="card-type-tag">Coming Soon</div>
+          <div class="card-type-tag">In Progress</div>
           <div class="card-title">AI GTM Automation Flow</div>
           <div class="card-desc">An end-to-end GTM workflow built in Replit, integrating AI models, CRM tooling, and MCP connections to automate outbound prospecting and lead qualification.</div>
-          <div style="margin-top:14px; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light);">In progress</div>
-        </div>
-
-        <div class="venture-card" tabindex="0" onclick="openVentureModal('coming2')" style="cursor:pointer; opacity:0.7;">
-          <div class="card-icon">🧠</div>
-          <div class="card-type-tag">Coming Soon</div>
-          <div class="card-title">More projects coming</div>
-          <div class="card-desc">Building in public. Check back soon — or connect on LinkedIn to follow along as new projects take shape.</div>
-          <div style="margin-top:14px; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light);">Watch this space</div>
+          <div class="card-cta" style="color:var(--text-light);">In progress</div>
         </div>
 
       </div>
@@ -1178,7 +956,7 @@
 
 <!-- VENTURE MODAL -->
 <div class="modal-overlay" id="venture-modal" onclick="closeVentureModalOnBg(event)">
-  <div class="modal-box" id="venture-modal-box">
+  <div class="modal-box">
     <button class="modal-close" onclick="closeVentureModal()">✕</button>
     <div class="modal-icon" id="venture-modal-icon"></div>
     <div class="modal-title" id="venture-modal-title"></div>
@@ -1194,56 +972,55 @@
     <div class="section-label">Recognition</div>
     <div class="awards-grid">
 
-      <div class="award-card" tabindex="0" onclick="openModal('daniels')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('daniels')">
         <div class="award-icon">🏅</div>
         <div class="award-title">$120K First Prize — Daniels Fund Technology Ethics Competition</div>
         <div class="award-body">University of Notre Dame</div>
-        <div class="award-date">2024</div>
+        <div class="award-date">2025</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('mccloskey')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('mccloskey')">
         <div class="award-icon">🏅</div>
         <div class="award-title">2nd Place + $25K — McCloskey New Venture Competition</div>
         <div class="award-body">University of Notre Dame</div>
         <div class="award-date">2024</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('fulbright')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('fulbright')">
         <div class="award-icon">🏅</div>
-        <div class="award-title">Fulbright US–UK Programme Scholar</div>
+        <div class="award-title">Sutton Trust–Fulbright US–UK Programme Scholar</div>
         <div class="award-body">US–UK Fulbright Commission</div>
         <div class="award-date">2020</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('itreds')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('itreds')">
         <div class="award-icon">🏅</div>
         <div class="award-title">iTREDS Scholar</div>
         <div class="award-body">Interdisciplinary Training & Research in Ethical Data Science — University of Notre Dame</div>
         <div class="award-date">2022</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('fighting')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('fighting')">
         <div class="award-icon">🏅</div>
         <div class="award-title">Fighting Irish Scholar — Full Scholarship</div>
         <div class="award-body">University of Notre Dame</div>
         <div class="award-date">2021</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('toland')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('toland')">
         <div class="award-icon">🏅</div>
         <div class="award-title">James Toland Modern Languages Award</div>
         <div class="award-body">Derry, Northern Ireland</div>
         <div class="award-date">2019</div>
       </div>
 
-      <div class="award-card" tabindex="0" onclick="openModal('euroscola')" style="cursor:pointer;">
+      <div class="award-card" tabindex="0" onclick="openModal('euroscola')">
         <div class="award-icon">🏅</div>
         <div class="award-title">Euroscola 2018</div>
         <div class="award-body">European Parliament, Strasbourg</div>
         <div class="award-date">2018</div>
       </div>
 
-    </div>
     </div>
   </div>
 </section>
@@ -1262,25 +1039,35 @@
         <div class="skills-pills">
           <span class="skill-pill">B2B Sales</span>
           <span class="skill-pill">Cold Calling</span>
-          <span class="skill-pill">Sales Cycle Management</span>
+          <span class="skill-pill">Outbound Prospecting</span>
           <span class="skill-pill">Business Development</span>
           <span class="skill-pill">GTM Strategy</span>
+          <span class="skill-pill">Sales Cycle Management</span>
           <span class="skill-pill">Customer Discovery</span>
           <span class="skill-pill">Account Management</span>
-          <span class="skill-pill">Outbound Prospecting</span>
+          <span class="skill-pill">Fundraising</span>
         </div>
       </div>
 
       <div>
         <div class="skill-group-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          Tools & Tech
+          GTM & Sales Tools
         </div>
         <div class="skills-pills">
-          <span class="skill-pill">Claude</span>
           <span class="skill-pill">HubSpot CRM</span>
           <span class="skill-pill">Apollo</span>
           <span class="skill-pill">LinkedIn Sales Navigator</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          AI & Build Tools
+        </div>
+        <div class="skills-pills">
+          <span class="skill-pill">Claude</span>
           <span class="skill-pill">Replit</span>
         </div>
       </div>
@@ -1292,7 +1079,7 @@
         </div>
         <div class="skills-pills">
           <span class="skill-pill">English (Native)</span>
-          <span class="skill-pill">Spanish (Advanced — lived in Barcelona)</span>
+          <span class="skill-pill">Spanish (C1 — near fluent)</span>
           <span class="skill-pill">French (Intermediate)</span>
           <span class="skill-pill">Irish (Elementary)</span>
         </div>
@@ -1304,52 +1091,31 @@
           Credentials & Certifications
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
-
           <div class="cred-card">
-            <div class="cred-issuer">
-              <span class="cred-dot" style="background:#d97706;"></span>
-              Anthropic
-            </div>
+            <div class="cred-issuer"><span class="cred-dot" style="background:#d97706;"></span>Anthropic</div>
             <div class="cred-title">AI Fluency Framework & Foundations</div>
             <div class="cred-sub">Certificate of Completion</div>
           </div>
-
           <div class="cred-card">
-            <div class="cred-issuer">
-              <span class="cred-dot" style="background:#d97706;"></span>
-              Anthropic
-            </div>
+            <div class="cred-issuer"><span class="cred-dot" style="background:#d97706;"></span>Anthropic</div>
             <div class="cred-title">Claude 101</div>
             <div class="cred-sub">Certificate of Completion</div>
           </div>
-
           <div class="cred-card">
-            <div class="cred-issuer">
-              <span class="cred-dot" style="background:#0ea5e9;"></span>
-              Replit
-            </div>
+            <div class="cred-issuer"><span class="cred-dot" style="background:#0ea5e9;"></span>Replit</div>
             <div class="cred-title">Beginner Builder</div>
             <div class="cred-sub">Level 1 Certification</div>
           </div>
-
           <div class="cred-card">
-            <div class="cred-issuer">
-              <span class="cred-dot" style="background:#ef4444;"></span>
-              American Red Cross
-            </div>
+            <div class="cred-issuer"><span class="cred-dot" style="background:#ef4444;"></span>American Red Cross</div>
             <div class="cred-title">CPR/AED for Professional Rescuers</div>
             <div class="cred-sub">with First Aid</div>
           </div>
-
           <div class="cred-card">
-            <div class="cred-issuer">
-              <span class="cred-dot" style="background:#6366f1;"></span>
-              Standard Response Protocol
-            </div>
+            <div class="cred-issuer"><span class="cred-dot" style="background:#6366f1;"></span>Standard Response Protocol</div>
             <div class="cred-title">SRP & Standard Reunification Method</div>
             <div class="cred-sub">Crisis Response Certification</div>
           </div>
-
         </div>
       </div>
 
@@ -1379,7 +1145,7 @@
           <div class="interest-emoji">🌍</div>
           <div class="interest-body">
             <div class="interest-title">Languages & cultures</div>
-            <div class="interest-desc">Fluent in Spanish, working on French, traces of Irish and Catalan. Learning a language is the most honest way to understand a culture — I've lived in Spain, studied across the US, and I'm not done yet.</div>
+            <div class="interest-desc">Near-fluent in Spanish, conversational in French, some Irish. Learning a language is the most honest way to understand a culture — I've lived in Spain, studied across the US, and I'm not done yet.</div>
           </div>
         </div>
 
@@ -1419,7 +1185,7 @@
           <div class="interest-emoji">✊</div>
           <div class="interest-body">
             <div class="interest-title">Social justice</div>
-            <div class="interest-desc">From writing a thesis on Afro-indigenous identity to closing a deal that employed 76 Afghan refugees — I've tried to put this into practice, not just hold it as a belief. Standing up for people who don't have a platform isn't optional for me.</div>
+            <div class="interest-desc">Growing up in Derry gives you a particular sensitivity to injustice — it's a town that has always stood up for people without a voice, and that instinct is deep in me. Lately that's been shaping how I think about AI: not just as a commercial opportunity, but as something with the potential to reduce inequity at scale. The people most likely to benefit from AI aren't in Silicon Valley. I find that genuinely exciting.</div>
           </div>
         </div>
 
@@ -1433,295 +1199,27 @@
   <div class="footer-inner">
     <div>
       <div class="footer-headline">
-        If something on this page<br>
-        caught your attention,<br>
-        <em>let's talk!</em>
+        If you've read this far,<br>
+        you already know<br>
+        <em>we should talk.</em>
       </div>
-      <p class="footer-sub">Whether it's a new opportunity, a GTM challenge, or just a conversation worth having — my inbox is open.</p>
+      <p class="footer-sub">Whether it's a new opportunity, a collaboration, or just a conversation worth having — my inbox is open.</p>
     </div>
     <div class="footer-links">
       <a href="https://linkedin.com/in/adamtoland" target="_blank" class="footer-link">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
       </a>
-      <a href="/cdn-cgi/l/email-protection#cbaabfa4a7aaa5affbfa8baca6aaa2a7e5a8a4a6" class="footer-link">
+      <a href="mailto:hello@adamtoland.com" class="footer-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span class="__cf_email__" data-cfemail="adccd9c2c1ccc3c99d9cedcac0ccc4c183cec2c0">[email&#160;protected]</span>
+        hello@adamtoland.com
       </a>
     </div>
   </div>
   <div class="footer-copy">© 2026 Adam Toland · adamtoland.com</div>
 </section>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Burger menu
-  function toggleBurger() {
-    const btn = document.getElementById('burger-btn');
-    const nav = document.getElementById('mobile-nav');
-    btn.classList.toggle('open');
-    nav.classList.toggle('open');
-  }
-  function closeBurger() {
-    document.getElementById('burger-btn').classList.remove('open');
-    document.getElementById('mobile-nav').classList.remove('open');
-  }
-
-  // Scroll progress bar + nav frosted glass
-  const navEl = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (scrollTop / docHeight) * 100;
-    document.getElementById('progress-bar').style.width = progress + '%';
-    navEl.classList.toggle('scrolled', scrollTop > 40);
-  });
-
-  // Intersection observer for fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 100);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.exp-entry, .edu-card, .venture-card, .award-card, .interest-card').forEach(el => observer.observe(el));
-
-  // Award modal data
-  const awardData = {
-    daniels: {
-      photoClass: '',
-      photoPosition: 'center 5%',
-      photo: 'https://raw.githubusercontent.com/atoland01/adamtoland-site/main/website%20daniels%20fund.jpeg',
-      icon: '🌍',
-      title: 'Fulbright US–UK Programme Scholar',
-      meta: 'US–UK Fulbright Commission · 2020',
-      body: `<p>Selected as a <strong>Fulbright US–UK Programme Scholar</strong> — one of the most competitive and prestigious international academic exchange awards, administered jointly by the US and UK governments.</p>
-      <p>The Fulbright Programme identifies individuals with exceptional academic records, leadership potential, and a commitment to cross-cultural understanding. Selection involves a rigorous review process by national committees on both sides of the Atlantic.</p>
-      <p>This award supported <strong>undergraduate study at the University of Notre Dame</strong>, where the focus was on mathematics, Spanish, and data science — building the quantitative and analytical foundations that underpin all subsequent commercial and entrepreneurial work.</p>`
-    },
-    itreds: {
-      photoClass: '',
-      photo: 'https://raw.githubusercontent.com/atoland01/adamtoland-site/main/website%20itreds.jpeg',
-      icon: '🔬',
-      title: 'iTREDS Scholar',
-      meta: 'Interdisciplinary Training & Research in Ethical Data Science · University of Notre Dame · 2022',
-      body: `<p>Selected as an <strong>iTREDS Scholar</strong> (Interdisciplinary Training and Research in Ethical Data Science) at the University of Notre Dame — a highly selective programme for undergraduates demonstrating exceptional aptitude at the intersection of data science and applied ethics.</p>
-      <p>The programme provided advanced training in statistical modelling, machine learning fundamentals, and the ethical frameworks governing responsible data use. Scholars participated in cross-disciplinary research projects bridging computer science, philosophy, and social sciences.</p>
-      <p>This scholarship reinforced a foundation in quantitative reasoning and data-driven decision-making that directly underpins subsequent commercial and entrepreneurial work.</p>`
-    },
-    toland: {
-      photoClass: '',
-      photo: null,
-      icon: '🌍',
-      title: 'James Toland Modern Languages Award',
-      meta: 'Derry, Northern Ireland · 2019',
-      body: `<p>Awarded the <strong>James Toland Modern Languages Award</strong> in recognition of outstanding achievement in modern languages — a particularly meaningful honour given the family connection to the award name.</p>
-      <p>The award recognised exceptional performance across Spanish and French language studies, demonstrating a commitment to linguistic excellence that would go on to shape both academic and professional paths — from a Fulbright scholarship to living and working in Barcelona.</p>`
-    },
-    euroscola: {
-      photoClass: '',
-      photo: null,
-      icon: '🇪🇺',
-      title: 'Euroscola 2018',
-      meta: 'European Parliament, Strasbourg · 2018',
-      body: `<p>Selected to represent Ireland at <strong>Euroscola 2018</strong> at the European Parliament in Strasbourg — a prestigious programme bringing together outstanding secondary school students from across EU member states.</p>
-      <p>Participants take part in simulated parliamentary debates, engage with MEPs, and develop proposals on European policy issues. Selection is competitive and based on academic achievement and civic engagement.</p>
-      <p>This experience was an early marker of the international outlook and cross-cultural communication skills that have defined subsequent academic and professional work.</p>`
-    },
-    fighting: {
-      photoClass: '',
-      photo: null,
-      icon: '☘️',
-      title: 'Fighting Irish Scholar — Full Scholarship',
-      meta: 'University of Notre Dame · 2021',
-      body: `<p>Awarded a <strong>full scholarship to the University of Notre Dame</strong> as a Fighting Irish Scholar — one of the university's most prestigious merit-based awards, granted to a small number of incoming students each year.</p>
-      <p>The scholarship covered full tuition, room, and board across a four-year undergraduate programme and a subsequent graduate degree. Selection is based on academic excellence, leadership record, character, and potential for impact.</p>
-      <p>Being awarded this scholarship from Derry, Northern Ireland represented a significant moment — the opportunity to pursue a world-class education in the United States that would not otherwise have been accessible, and which ultimately shaped the entire professional journey that followed.</p>`
-    }
-  };
-
-  function openModal(id) {
-    const d = awardData[id];
-    if (!d) return;
-    document.getElementById('modal-icon').textContent = d.icon;
-    document.getElementById('modal-title').textContent = d.title;
-    document.getElementById('modal-meta').textContent = d.meta;
-    document.getElementById('modal-body').innerHTML = d.body;
-    const photoWrap = document.getElementById('modal-photo-wrap');
-    if (d.photo) {
-      photoWrap.innerHTML = '<img class="modal-photo ' + (d.photoClass||'') + '" style="object-position:' + (d.photoPosition||'center 20%') + '" src="' + d.photo + '" alt="' + d.title + '">';
-    } else {
-      photoWrap.innerHTML = '';
-    }
-    document.getElementById('award-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    document.getElementById('award-modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function closeModalOnBg(e) {
-    if (e.target === document.getElementById('award-modal')) closeModal();
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  // Education modal data
-  const eduData = {
-    undergrad: {
-      icon: '🎓',
-      title: 'University of Notre Dame — Undergraduate',
-      meta: 'B.S. Mathematics · B.A. Spanish (Honours) · Minor in Data Science · Aug 2020 – May 2024',
-      body: `
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:0 0 8px;">The road to Notre Dame</h3>
-        <p>I first applied to Notre Dame in 2018 and was rejected. Rather than giving up, I spent a gap year proving myself — working full-time in retail sales at Carphone Warehouse in Derry for six months, then moving to Barcelona at the start of 2020 to teach English at a primary school and complete a TEFL qualification. I applied again in 2019 and got in at the second time of asking, with a <strong>full scholarship</strong> and a Fulbright award.</p>
-        <p>The rejection was the best thing that happened to me. The gap year gave me real commercial experience, a second language at near-fluency, and the kind of self-awareness you only get from actually going and doing something before university.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">Mathematics</h3>
-        <p>My mathematics degree was focused on <strong>pure mathematics</strong> — linear algebra, real analysis, probability theory, abstract algebra. Not applied maths for engineering; the kind of mathematics that trains you to think rigorously, construct proofs, and reason from first principles. That analytical foundation underpins everything I've done commercially since.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">Spanish & Senior Thesis</h3>
-        <p>The Spanish degree went well beyond language fluency. My coursework focused on <strong>modern societal issues in Latin America</strong> — the identity crisis of Afro-Latino communities, the politics of the US–Mexico border (a class called <em>Borders and Bridges</em>), and the Caribbean as a contested cultural and political space.</p>
-        <p>I wrote my <strong>senior thesis entirely in Spanish</strong> on themes drawn from these courses — titled <em>El cruce nunca acaba: La identidad afro-indígena y cómo se representa en la obra de Alan Pelaez Lopez</em> (The crossing never ends: Afro-indigenous identity and how it is represented in the work of Alan Pelaez Lopez). Supervised by Dr. Marisel C. Moreno, who specialises in Afro-Latinx literature.</p>
-        <div style="margin-top:16px;">
-          <a href="https://drive.google.com/file/d/1V_djsh_Vuzh2ai6VhZUHH4HXvGI6eBcE/preview" download="Adam_Toland_Senior_Thesis.pdf" style="display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; text-decoration:none; padding:10px 20px; border-radius:99px; font-size:13px; font-weight:600; letter-spacing:0.05em; transition:background 0.2s;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Senior Thesis (PDF)
-          </a>
-        </div>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">Campus life & organisations</h3>
-        <p>Outside the classroom, I was part of the <strong>Notre Dame & St. Mary's Irish Dance team</strong>, the <strong>Gaelic Athletic Association (GAA)</strong> on campus, the <strong>Student International Business Council (SIBC)</strong>, and student government's <strong>FGLI branch</strong> (First-Generation and Low-Income students) — focused on improving the university experience for students without the same financial access as their peers.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">The IDEA Center — where everything started</h3>
-        <p>Going into my sophomore summer, I joined the <strong>IDEA Center's Race to Revenue programme</strong> as a business development intern — working with pre-seed startups on customer discovery, lead generation, and GTM strategy. During the school year I moved into the <strong>Migrant Impact Network</strong>, which is what led directly to closing the $6M placement deal with Choice Hotels. That experience is what lit the entrepreneurial spark and set the direction for everything that followed.</p>
-      `
-    },
-    esteem: {
-      icon: '🎓',
-      title: 'University of Notre Dame — ESTEEM',
-      meta: 'M.S. Engineering, Science & Technology Entrepreneurship · Aug 2024 – May 2025',
-      body: `
-        <p>ESTEEM (Engineering, Science & Technology Entrepreneurship Excellence Master's) is a one-year graduate programme at Notre Dame designed specifically for STEM graduates who want to build and commercialise technology — not just study it. Entry is competitive and limited to candidates with strong technical foundations and demonstrated entrepreneurial drive.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">What I studied</h3>
-        <p>Coursework covered <strong>generative AI and the technical foundations of AI systems</strong>, sales and growth hacking, technical marketing, entrepreneurial finance, and technology commercialisation strategy. The programme is deliberately hands-on — the capstone involves working as a consultant for a real company rather than writing a dissertation.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">Why ESTEEM</h3>
-        <p>After co-founding DoorBlockade during undergrad, I wanted a structured environment to sharpen the commercial and technical skills needed to operate in AI and high-growth tech. ESTEEM was the right vehicle — rigorous enough to be credible, applied enough to be useful from day one.</p>
-
-        <h3 style="font-family:var(--serif); font-size:17px; color:var(--navy); margin:18px 0 8px;">Recognition during the programme</h3>
-        <p>While on ESTEEM, I led a four-person team to <strong>first place and $120K in prize money</strong> at the Daniels Fund Technology Ethics Competition — the largest prize in the competition's history. The AI governance white paper we produced was adopted by Notre Dame's IDEA Center as a case study for responsible tech commercialisation.</p>
-      `
-    },
-    tefl: {
-      icon: '📚',
-      title: 'Universitat Internacional de Catalunya — TEFL',
-      meta: 'Certificate in Teaching English as a Foreign Language · Jan 2020 – Apr 2020 · Barcelona',
-      body: `
-        <p>During my gap year in Barcelona, I completed a <strong>TEFL/ESL qualification</strong> at the Universitat Internacional de Catalunya alongside a teaching role at Escola Pia de Caldes — a primary school in Caldes de Montbui, just outside the city.</p>
-        <p>I taught English to children aged 4–12, working in small groups to build vocabulary, spoken confidence, and comfort with a foreign language. The qualification covered teaching methodology, lesson planning, and second-language acquisition theory.</p>
-        <p>The role was cut short in April 2020 when Covid-19 closed schools across Spain. I had been in Barcelona for just under four months at that point — enough time to achieve conversational fluency in Catalan alongside Spanish, and to confirm that living and working abroad was something I wanted to keep doing.</p>
-      `
-    }
-  };
-
-  function openEduModal(id) {
-    const d = eduData[id];
-    if (!d) return;
-    document.getElementById('edu-modal-icon').textContent = d.icon;
-    document.getElementById('edu-modal-title').textContent = d.title;
-    document.getElementById('edu-modal-meta').textContent = d.meta;
-    document.getElementById('edu-modal-body').innerHTML = d.body;
-    const photoWrap = document.getElementById('edu-modal-photo-wrap');
-    photoWrap.innerHTML = d.photo ? '<img class="modal-photo" src="' + d.photo + '" alt="' + d.title + '">' : '';
-    document.getElementById('edu-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeEduModal() {
-    document.getElementById('edu-modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function closeEduModalOnBg(e) {
-    if (e.target === document.getElementById('edu-modal')) closeEduModal();
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeVentureModal(); closeEduModal(); } });
-
-  // Venture modal data
-  const ventureData = {
-    doorblockade: {
-      icon: '🚀',
-      title: 'DoorBlockade',
-      meta: 'Co-Founder & COO · May 2024 – Mar 2026 · South Bend, Indiana',
-      photo: null,
-      body: `<p><strong>The problem:</strong> In an active-threat emergency, most interior doors cannot be quickly secured from the inside. Teachers and staff are left exposed for critical seconds.</p>
-      <p><strong>The solution:</strong> DoorBlockade is a patented portable device that secures almost any interior door in under five seconds — no installation, no training required. Deployed in public schools, private schools, healthcare facilities, financial institutions, and government buildings.</p>
-      <p><strong>What I built:</strong> As Co-Founder and COO, I owned everything commercial — brand identity, GTM strategy, full sales cycle from cold outreach to close. Took the company from pre-revenue to <strong>$85K revenue and $730K pipeline within four months</strong>.</p>
-      <p>Secured a <strong>$450K investment round</strong>, built an advisory board, and conducted 120+ primary stakeholder interviews to expand from K-12 schools into healthcare, financial services, and government.</p>
-      <p>Finished <strong>2nd at the McCloskey New Venture Competition</strong> (3rd largest startup pitch competition in the US), winning $25K.</p>`
-    },
-    ideacenter: {
-      icon: '🤝',
-      title: 'Closing a $6M Deal — IDEA Center, Notre Dame',
-      meta: 'Lead Business Development Analyst · May 2022 – May 2024',
-      photo: null,
-      body: `<p><strong>The opportunity:</strong> A corporate press release from Choice Hotels revealed a critical staffing shortage — 86% annual staff turnover in the hospitality industry. I saw a match with a separate initiative supporting Afghan refugees seeking asylum in the US.</p>
-      <p><strong>The approach:</strong> Built a targeted outbound list of C-suite decision makers by leveraging the Notre Dame alumni network. Pitched directly to CXOs at major hospitality brands including Marriott before landing Choice Hotels.</p>
-      <p><strong>The outcome:</strong> Closed a <strong>$6M placement deal</strong> securing full-time employment for <strong>76 Afghan refugees</strong> in entry-level hospitality roles — providing asylum-critical employment while addressing the industry's turnover crisis.</p>
-      <p>This deal remains one of the clearest examples of what sharp commercial instinct, persistent outbound, and a genuine understanding of both sides of a market can achieve.</p>`
-    },
-    coming1: {
-      icon: '⚡',
-      title: 'AI GTM Automation Flow',
-      meta: 'Personal Project · In Progress',
-      photo: null,
-      body: `<p>This project is currently in progress. The goal is to build an end-to-end GTM workflow in Replit that integrates multiple AI models, CRM tooling, and MCP connections to automate the most time-consuming parts of outbound prospecting and lead qualification.</p>
-      <p>Check back soon for a full write-up.</p>`
-    },
-    coming2: {
-      icon: '🧠',
-      title: 'More projects coming',
-      meta: 'Building in public',
-      photo: null,
-      body: `<p>More projects are in the pipeline. Connect on <a href="https://linkedin.com/in/adamtoland" target="_blank" style="color:var(--accent);">LinkedIn</a> to follow along as they take shape.</p>`
-    }
-  };
-
-  function openVentureModal(id) {
-    const d = ventureData[id];
-    if (!d) return;
-    document.getElementById('venture-modal-icon').textContent = d.icon;
-    document.getElementById('venture-modal-title').textContent = d.title;
-    document.getElementById('venture-modal-meta').textContent = d.meta;
-    document.getElementById('venture-modal-body').innerHTML = d.body;
-    const photoWrap = document.getElementById('venture-modal-photo-wrap');
-    photoWrap.innerHTML = d.photo ? '<img class="modal-photo" src="' + d.photo + '" alt="' + d.title + '">' : '';
-    document.getElementById('venture-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeVentureModal() {
-    document.getElementById('venture-modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function closeVentureModalOnBg(e) {
-    if (e.target === document.getElementById('venture-modal')) closeVentureModal();
-  }
-  // Tab switcher
-  function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    event.target.classList.add('active');
-    // Re-trigger animations
-    document.querySelectorAll('#' + tabId + ' .venture-card').forEach((el, i) => {
-      el.classList.remove('visible');
-      setTimeout(() => el.classList.add('visible'), i * 100 + 50);
-    });
-  }
-</script>
-
-
-<!-- AWARD MODAL — must be direct child of body for correct stacking -->
+<!-- AWARD MODAL -->
 <div class="modal-overlay" id="award-modal" onclick="closeModalOnBg(event)">
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1733,10 +1231,9 @@
   </div>
 </div>
 
-
 <!-- EDUCATION MODAL -->
 <div class="modal-overlay" id="edu-modal" onclick="closeEduModalOnBg(event)">
-  <div class="modal-box" id="edu-modal-box">
+  <div class="modal-box">
     <button class="modal-close" onclick="closeEduModal()">✕</button>
     <div class="modal-icon" id="edu-modal-icon"></div>
     <div class="modal-title" id="edu-modal-title"></div>
@@ -1745,6 +1242,266 @@
     <div class="modal-body" id="edu-modal-body"></div>
   </div>
 </div>
+
+<script>
+  // Burger menu
+  function toggleBurger() {
+    document.getElementById('burger-btn').classList.toggle('open');
+    document.getElementById('mobile-nav').classList.toggle('open');
+  }
+  function closeBurger() {
+    document.getElementById('burger-btn').classList.remove('open');
+    document.getElementById('mobile-nav').classList.remove('open');
+  }
+
+  // Scroll progress + nav
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = (scrollTop / docHeight * 100) + '%';
+    document.getElementById('nav').classList.toggle('scrolled', scrollTop > 40);
+  });
+
+  // Intersection observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.exp-entry, .edu-card, .venture-card, .award-card, .interest-card').forEach(el => observer.observe(el));
+
+  // AWARD MODAL DATA
+  const awardData = {
+    daniels: {
+      photo: 'https://esteem.nd.edu/assets/614600/400x/ethics_1st_place_winner_notre_dame_web.jpg',
+      photoPosition: 'center 20%',
+      icon: '🏆',
+      title: 'Daniels Fund Technology Ethics Competition — First Place',
+      meta: 'University of Notre Dame · 2025 · $120,000',
+      body: `<p>A team of four ESTEEM students. An 18-page case study about a predictive AI company with 95% accuracy, five potential licensing partners ranging from a government surveillance programme to a health tech startup, and the challenge of recommending who they should sell to — on ethical and commercial grounds simultaneously.</p>
+      <p>We built our own <strong>AI-governance framework balancing revenue growth with data-privacy ethics</strong>, got through to the Denver final, and then had two hours to rebuild our entire pitch when the case was flipped upside down with new variables. We trusted our gut, trusted each other, and won <strong>$120K — the largest prize in the competition's history</strong> — first place ahead of the University of Colorado Boulder and the United States Air Force Academy.</p>
+      <p>The resulting white paper was <strong>adopted by Notre Dame's IDEA Center as a case study for responsible tech commercialisation</strong>.</p>
+      <p>The thing I took from it: you can do well by doing good. Those two things aren't in conflict. They never were.</p>
+      <a href="https://esteem.nd.edu/news/notre-dame-esteem-students-take-top-prize-at-national-ai-ethics-competition-the-team-of-four-beat-out-competition-from-across-the-country-to-secure-first-place-at-the-daniels-fund-inaugural-ethics-case-competition/" target="_blank" class="modal-article-link">Read the full article ↗</a>`
+    },
+    mccloskey: {
+      photo: null,
+      icon: '🏅',
+      title: 'McCloskey New Venture Competition — 2nd Place',
+      meta: 'University of Notre Dame · 2024 · $25,000',
+      body: `<p>The McCloskey New Venture Competition is one of the largest startup pitch competitions in the US. I competed with DoorBlockade in 2024 and finished second, winning $25K.</p>
+      <p>More than the prize, it was the validation — a panel of experienced investors and entrepreneurs who had no prior relationship with us, no reason to be generous, and chose us anyway. That kind of external proof matters at the early stage of a company.</p>`
+    },
+    fulbright: {
+      photo: null,
+      icon: '🌍',
+      title: 'Sutton Trust–Fulbright US–UK Programme Scholar',
+      meta: 'US–UK Fulbright Commission · Sutton Trust · 2020',
+      body: `<p>The <strong>Sutton Trust–Fulbright US–UK Programme</strong> is one of the most competitive academic exchange awards between the US and UK, administered jointly by the Fulbright Commission and the Sutton Trust.</p>
+      <p>I applied when I was 17 — genuinely as a long shot, not expecting anything. Getting through was the first time I understood that applying for things that seem out of reach is itself a strategy.</p>
+      <p>That scholarship set everything in motion — it's what eventually led to Notre Dame, to entrepreneurship, to everything that followed. Sometimes the most important thing you do is send the application.</p>`
+    },
+    itreds: {
+      photo: 'https://raw.githubusercontent.com/atoland01/adamtoland-site/main/website%20itreds.jpeg',
+      icon: '🔬',
+      title: 'iTREDS Scholar',
+      meta: 'Interdisciplinary Training & Research in Ethical Data Science · University of Notre Dame · 2022',
+      body: `<p>Selected as an <strong>iTREDS Scholar</strong> (Interdisciplinary Training and Research in Ethical Data Science) at the University of Notre Dame — a highly selective programme for undergraduates demonstrating exceptional aptitude at the intersection of data science and applied ethics.</p>
+      <p>The programme provided advanced training in statistical modelling, machine learning fundamentals, and the ethical frameworks governing responsible data use. Scholars participated in cross-disciplinary research projects bridging computer science, philosophy, and social sciences.</p>
+      <p>This scholarship reinforced a foundation in quantitative reasoning and data-driven decision-making that directly underpins subsequent commercial and entrepreneurial work.</p>`
+    },
+    fighting: {
+      photo: null,
+      icon: '☘️',
+      title: 'Fighting Irish Scholar — Full Scholarship',
+      meta: 'University of Notre Dame · 2021',
+      body: `<p>Awarded a <strong>full scholarship to the University of Notre Dame</strong> as a Fighting Irish Scholar — one of the university's most prestigious merit-based awards, granted to a small number of incoming students each year.</p>
+      <p>The scholarship covered full tuition, room, and board across a four-year undergraduate programme and a subsequent graduate degree. Selection is based on academic excellence, leadership record, character, and potential for impact.</p>
+      <p>Being awarded this scholarship from Derry, Northern Ireland represented a significant moment — the opportunity to pursue a world-class education in the United States that would not otherwise have been accessible, and which ultimately shaped the entire professional journey that followed.</p>`
+    },
+    toland: {
+      photo: null,
+      icon: '🌍',
+      title: 'James Toland Modern Languages Award',
+      meta: 'Derry, Northern Ireland · 2019',
+      body: `<p>Awarded the <strong>James Toland Modern Languages Award</strong> in recognition of outstanding achievement in modern languages — a particularly meaningful honour given the family connection to the award name.</p>
+      <p>The award recognised exceptional performance across Spanish and French language studies, demonstrating a commitment to linguistic excellence that would go on to shape both academic and professional paths — from a Fulbright scholarship to living and working in Barcelona.</p>`
+    },
+    euroscola: {
+      photo: null,
+      icon: '🇪🇺',
+      title: 'Euroscola 2018',
+      meta: 'European Parliament, Strasbourg · 2018',
+      body: `<p>Selected to represent Ireland at <strong>Euroscola 2018</strong> at the European Parliament in Strasbourg — a prestigious programme bringing together outstanding secondary school students from across EU member states.</p>
+      <p>Participants take part in simulated parliamentary debates, engage with MEPs, and develop proposals on European policy issues. Selection is competitive and based on academic achievement and civic engagement.</p>
+      <p>This experience was an early marker of the international outlook and cross-cultural communication skills that have defined subsequent academic and professional work.</p>`
+    }
+  };
+
+  function openModal(id) {
+    const d = awardData[id];
+    if (!d) return;
+    document.getElementById('modal-icon').textContent = d.icon;
+    document.getElementById('modal-title').textContent = d.title;
+    document.getElementById('modal-meta').textContent = d.meta;
+    document.getElementById('modal-body').innerHTML = d.body;
+    const photoWrap = document.getElementById('modal-photo-wrap');
+    photoWrap.innerHTML = d.photo ? `<img class="modal-photo" style="object-position:${d.photoPosition||'center 20%'}" src="${d.photo}" alt="${d.title}">` : '';
+    document.getElementById('award-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('award-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOnBg(e) {
+    if (e.target === document.getElementById('award-modal')) closeModal();
+  }
+
+  // EDUCATION MODAL DATA
+  const eduData = {
+    undergrad: {
+      icon: '🎓',
+      title: 'University of Notre Dame — Undergraduate',
+      meta: 'B.S. Mathematics · B.A. Spanish (Honours) · Minor in Data Science · Aug 2020 – May 2024',
+      body: `
+        <h3>The road to Notre Dame</h3>
+        <p>I first applied to Notre Dame in 2018 and was rejected. Rather than giving up, I spent a gap year proving myself — working full-time in retail sales at Carphone Warehouse in Derry for six months, then moving to Barcelona at the start of 2020 to teach English at a primary school and complete a TEFL qualification. I applied again and got in at the second time of asking, with a <strong>full scholarship</strong> and a Fulbright award. The rejection was the best thing that happened to me.</p>
+
+        <h3>Mathematics</h3>
+        <p>My mathematics degree was focused on <strong>pure mathematics</strong> — linear algebra, real analysis, probability theory, abstract algebra. Not applied maths for engineering; the kind of mathematics that trains you to think rigorously, construct proofs, and reason from first principles. That analytical foundation underpins everything I've done commercially since.</p>
+
+        <h3>Spanish & Senior Thesis</h3>
+        <p>The Spanish degree went well beyond language fluency. My coursework focused on <strong>modern societal issues in Latin America</strong> — the identity crisis of Afro-Latino communities, the politics of the US–Mexico border, and the Caribbean as a contested cultural and political space.</p>
+        <p>I wrote my <strong>senior thesis entirely in Spanish</strong> — titled <em>El cruce nunca acaba: La identidad afro-indígena y cómo se representa en la obra de Alan Pelaez Lopez</em>. Supervised by Dr. Marisel C. Moreno.</p>
+        <div style="margin-top:16px;">
+          <a href="https://drive.google.com/file/d/1V_djsh_Vuzh2ai6VhZUHH4HXvGI6eBcE/preview" target="_blank" class="modal-article-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Senior Thesis (PDF)
+          </a>
+        </div>
+
+        <h3>Campus life & organisations</h3>
+        <p>Outside the classroom, I was part of the <strong>Notre Dame & St. Mary's Irish Dance team</strong>, the <strong>Gaelic Athletic Association (GAA)</strong>, the <strong>Student International Business Council (SIBC)</strong>, and student government's <strong>FGLI branch</strong> — focused on improving the university experience for first-generation and low-income students.</p>
+
+        <h3>The IDEA Center — where the entrepreneurial spark started</h3>
+        <p>Going into my sophomore summer, I joined the <strong>IDEA Center's Race to Revenue programme</strong> as a business development intern. It was where the entrepreneurial spark started — and it's still sparking.</p>
+      `
+    },
+    esteem: {
+      icon: '🎓',
+      title: 'University of Notre Dame — ESTEEM',
+      meta: 'M.S. Engineering, Science & Technology Entrepreneurship · Aug 2024 – May 2025',
+      body: `
+        <p>ESTEEM is a one-year graduate programme for STEM candidates who want to build and commercialise technology — not just study it. I chose it deliberately. DoorBlockade had given me real commercial experience, and I wanted a structured environment to go deeper — on AI, on the mechanics of how technology becomes a business, on the strategic frameworks that separate good founders from great ones. It was the right programme at the right moment.</p>
+
+        <h3>What I studied</h3>
+        <p>Coursework covered <strong>generative AI and the technical foundations of AI systems</strong>, sales and growth hacking, technical marketing, entrepreneurial finance, and technology commercialisation strategy. The programme is deliberately hands-on — the capstone involves working as a consultant for a real company rather than writing a dissertation.</p>
+
+        <h3>Recognition during the programme</h3>
+        <p>While on ESTEEM, I led a four-person team to <strong>first place and $120K in prize money</strong> at the Daniels Fund Technology Ethics Competition — the largest prize in the competition's history. The AI governance white paper we produced was adopted by Notre Dame's IDEA Center as a case study for responsible tech commercialisation.</p>
+      `
+    },
+    tefl: {
+      icon: '📚',
+      title: 'Universitat Internacional de Catalunya — TEFL',
+      meta: 'Certificate in Teaching English as a Foreign Language · Jan 2020 – Apr 2020 · Barcelona',
+      body: `
+        <p>During my gap year in Barcelona, I completed a <strong>TEFL/ESL qualification</strong> at the Universitat Internacional de Catalunya alongside a teaching role at Escola Pia de Caldes — a primary school in Caldes de Montbui, just outside the city.</p>
+        <p>I taught English to children aged 4–12, working in small groups to build vocabulary, spoken confidence, and comfort with a foreign language. The qualification covered teaching methodology, lesson planning, and second-language acquisition theory.</p>
+        <p>The role was cut short in April 2020 when Covid-19 closed schools across Spain. I had been in Barcelona for just under four months — long enough to take my Spanish from already strong to near-fluent, and to confirm that living and working abroad was something I wanted to keep doing.</p>
+      `
+    }
+  };
+
+  function openEduModal(id) {
+    const d = eduData[id];
+    if (!d) return;
+    document.getElementById('edu-modal-icon').textContent = d.icon;
+    document.getElementById('edu-modal-title').textContent = d.title;
+    document.getElementById('edu-modal-meta').textContent = d.meta;
+    document.getElementById('edu-modal-body').innerHTML = d.body;
+    document.getElementById('edu-modal-photo-wrap').innerHTML = d.photo ? `<img class="modal-photo" src="${d.photo}" alt="${d.title}">` : '';
+    document.getElementById('edu-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeEduModal() {
+    document.getElementById('edu-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeEduModalOnBg(e) {
+    if (e.target === document.getElementById('edu-modal')) closeEduModal();
+  }
+
+  // VENTURE MODAL DATA
+  const ventureData = {
+    doorblockade: {
+      icon: '🚀',
+      title: 'DoorBlockade',
+      meta: 'Co-Founder & COO · May 2024 – Mar 2026 · South Bend, Indiana',
+      body: `<p>Growing up in post-conflict Derry gave me an understanding of what sustained threat does to a community. The commercial side of DoorBlockade I figured out as I went. What I learned is that in early-stage startups, the founder who can sell is the founder who survives. I became that person.</p>
+      <p>I also learned that speaking to 120 people before you think you're ready is almost always the right move — the market teaches you things no amount of research can. We took the company from zero to <strong>$85K revenue and a $730K pipeline</strong>, raised <strong>$450K</strong>, and finished <strong>2nd at the McCloskey New Venture Competition</strong>.</p>`
+    },
+    truepay: {
+      icon: '💳',
+      title: 'TruePay Partners',
+      meta: 'Founder · 2025–present · Derry, Northern Ireland',
+      body: `<p>TruePay exists because I didn't want to stop moving. Between DoorBlockade ending and finding the right next role, I could have waited — instead I set up something that keeps my commercial instincts sharp and genuinely helps local businesses.</p>
+      <p>We partner with payment solution providers and negotiate on behalf of small businesses to get them better rates on card terminals and POS systems. Door-to-door, relationship-first, no shortcuts. <strong>6 clients in month one.</strong></p>`
+    },
+    lantern: {
+      icon: '🔦',
+      title: 'Lantern Network',
+      meta: 'Advisor · 2025–present',
+      body: `<p>Drone detection and door security aren't the same product, but they're the same mission — keeping people safe in environments where threat is real. Advising Lantern felt like a natural extension of the work I started with DoorBlockade.</p>
+      <p>The team are exceptional engineers and decorated veterans who know their technology deeply but were new to the business side — and I've lived that gap from the other direction. I know which mistakes are worth making and which aren't.</p>
+      <p>What I love about this stage of a company is everything: the hypotheses, the early customer conversations, figuring out who to talk to and in what order, the energy of building something from nothing. I'm paying forward what others did for me — and realising in the process that I've learned more than I thought.</p>`
+    },
+    aigtm: {
+      icon: '⚡',
+      title: 'AI GTM Automation Flow',
+      meta: 'Personal Project · In Progress · 2026',
+      body: `<p>An end-to-end GTM workflow built in Replit, integrating AI models, CRM tooling, and MCP connections to automate the most time-consuming parts of outbound prospecting and lead qualification.</p>
+      <p>Currently in progress. Full write-up coming when it's ready.</p>`
+    }
+  };
+
+  function openVentureModal(id) {
+    const d = ventureData[id];
+    if (!d) return;
+    document.getElementById('venture-modal-icon').textContent = d.icon;
+    document.getElementById('venture-modal-title').textContent = d.title;
+    document.getElementById('venture-modal-meta').textContent = d.meta;
+    document.getElementById('venture-modal-body').innerHTML = d.body;
+    document.getElementById('venture-modal-photo-wrap').innerHTML = d.photo ? `<img class="modal-photo" src="${d.photo}" alt="${d.title}">` : '';
+    document.getElementById('venture-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVentureModal() {
+    document.getElementById('venture-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeVentureModalOnBg(e) {
+    if (e.target === document.getElementById('venture-modal')) closeVentureModal();
+  }
+
+  // Tab switcher
+  function switchTab(tabId, event) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+    document.querySelectorAll('#' + tabId + ' .venture-card').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), i * 100 + 50);
+    });
+  }
+
+  // Close all modals on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeVentureModal(); closeEduModal(); }
+  });
+</script>
 
 </body>
 </html>
